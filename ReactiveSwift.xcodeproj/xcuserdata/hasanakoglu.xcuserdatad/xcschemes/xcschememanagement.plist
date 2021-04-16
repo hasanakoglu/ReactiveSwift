@@ -7,7 +7,25 @@
 		<key>ReactiveSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>13</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5A82EF9125F65F1E001BB713</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A82EFA725F65F1F001BB713</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A82EFB225F65F1F001BB713</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
