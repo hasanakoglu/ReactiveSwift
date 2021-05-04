@@ -5,7 +5,7 @@
 //  Created by Hasan Akoglu on 08/03/2021.
 //
 
-import Foundation
+import Combine
 import RxNetworking
 import RxCocoa
 import RxDataSources
@@ -26,6 +26,7 @@ struct Course: Decodable, Equatable {
 
 protocol APIClientProtocol {
     func fetchCourses() -> Observable<[Course]>
+    func fetchCourses2() -> AnyPublisher<[Course], Error>
 }
 
 class APIClient: APIClientProtocol {
@@ -37,6 +38,16 @@ class APIClient: APIClientProtocol {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         return requestObservable.callAPI(request: request)
+    }
+    
+    //combine version
+    
+    func fetchCourses2() -> AnyPublisher<[Course], Error> {
+        var request = URLRequest(url: URL(string:"https://api.letsbuildthatapp.com/jsondecodable/courses")!)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        return requestObservable.callAPI2(request: request)
     }
 }
 
@@ -81,5 +92,36 @@ public class RequestObservable {
                 task.cancel()
             }
         }
+    }
+    
+    //combine version
+    
+    public func callAPI2<ItemModel: Decodable>(request: URLRequest) -> AnyPublisher<ItemModel, Error> {
+        //MARK: creating our observable
+        return Deferred { () -> Future<ItemModel, Error> in
+            return Future { promise in
+                //MARK: create URLSession dataTask
+                let task = self.urlSession.dataTask(with: request) { (data, response, error) in
+                    if let httpResponse = response as? HTTPURLResponse{
+                        let statusCode = httpResponse.statusCode
+                        do {
+                            let _data = data ?? Data()
+                            if (200...399).contains(statusCode) {
+                                let objs = try self.jsonDecoder.decode(ItemModel.self, from: _data)
+                                //MARK: observer onNext event
+                                promise(.success(objs))
+                            }
+                            else {
+                                promise(.failure(error!))
+                            }
+                        } catch {
+                            //MARK: observer onNext event
+                            promise(.failure(error))
+                        }
+                    }
+                }
+                task.resume()
+            }
+        }.eraseToAnyPublisher()
     }
 }

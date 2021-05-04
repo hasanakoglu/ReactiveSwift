@@ -29,7 +29,8 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.fetchCourses()
+//        viewModel.fetchCourses() //rxswift
+        viewModel.fetchCourses2() // combine
     }
     
     private func setupViews() {
