@@ -14,13 +14,12 @@ import RxSwift
 struct Course: Decodable, Equatable {
     let id: Int!
     let name: String!
-    let link, imageURL: String!
+    let link: String!
+    let imageUrl: String!
     let numberOfLessons: Int!
 
     enum CodingKeys: String, CodingKey {
-        case id, name, link
-        case imageURL
-        case numberOfLessons
+        case id, name, link, imageUrl, numberOfLessons
     }
 }
 

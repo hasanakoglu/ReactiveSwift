@@ -39,6 +39,7 @@ class MainViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
@@ -86,7 +87,9 @@ class MainViewController: UIViewController {
                     return UITableViewCell()
                 }
 
-                cell.update(title: "\(model.id)", name: model.name)
+                cell.update(title: String(model.id), name: model.name)
+                let cellViewModel = CourseCellViewModel(courses: model)
+                cell.bind(to: cellViewModel)
                 return cell
             }
         }

@@ -56,7 +56,8 @@ final class MainViewModel {
                     guard let id  = courseItem.id else { return }
                     guard let name = courseItem.name else { return }
                     guard let lessons = courseItem.numberOfLessons else { return }
-                    let item = Course(id: id, name: name, link: nil, imageURL: nil, numberOfLessons: lessons)
+                    guard let imageURL = courseItem.imageUrl else { return }
+                    let item = Course(id: id, name: name, link: nil, imageUrl: imageURL, numberOfLessons: lessons)
                     courseDataItems.append(item)
                 }
             }
@@ -77,13 +78,14 @@ final class MainViewModel {
                     guard let id  = courseItem.id else { return }
                     guard let name = courseItem.name else { return }
                     guard let lessons = courseItem.numberOfLessons else { return }
-                    let item = Course(id: id, name: name, link: nil, imageURL: nil, numberOfLessons: lessons)
+                    guard let imageURL = courseItem.imageUrl else { return }
+                    let item = Course(id: id, name: name, link: nil, imageUrl: imageURL, numberOfLessons: lessons)
                     courseDataItems.append(item)
                 }
             }
             .map { [coursesDataItemsRelay] in coursesDataItemsRelay.value + $0 }
             .sink(receiveCompletion: { _ in
-                //noop
+                // completion
             }, receiveValue: { [coursesDataItemsRelay] value in
                 coursesDataItemsRelay.accept(value)
             })
