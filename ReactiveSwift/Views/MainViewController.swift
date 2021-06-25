@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
                     return UITableViewCell()
                 }
 
-                cell.update(title: String(model.id), name: model.name)
+                cell.update(title: model.name, subtitle: "Number of lessons: " + String(model.numberOfLessons))
                 let cellViewModel = CourseCellViewModel(courses: model)
                 cell.bind(to: cellViewModel)
                 return cell

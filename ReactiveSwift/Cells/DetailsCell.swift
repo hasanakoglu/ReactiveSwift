@@ -5,7 +5,7 @@ import RxSwift
 class DetailsCell: UITableViewCell {
     static let identifier: String = "cell2"
     var titleLabel: UILabel = UILabel()
-    let nameLabel: UILabel = UILabel()
+    let subtitleLabel: UILabel = UILabel()
     let cardView: UIView = UIView()
     let characterImageView: UIImageView = UIImageView()
     let disposeBag = DisposeBag()
@@ -19,11 +19,11 @@ class DetailsCell: UITableViewCell {
         fatalError()
     }
 
-    func update(title: String, name: String) {
+    func update(title: String, subtitle: String) {
         titleLabel.text = title
-        nameLabel.text = name
+        subtitleLabel.text = subtitle
         titleLabel.font = UIFont(name: "ArialMT", size: 12)
-        nameLabel.font = UIFont(name: "ArialMT", size: 12)
+        subtitleLabel.font = UIFont(name: "ArialMT", size: 12)
     }
     
     func bind(to viewModel: CourseCellViewModel) {
@@ -43,7 +43,7 @@ class DetailsCell: UITableViewCell {
         contentView.addSubview(cardView)
         cardView.addSubview(characterImageView)
         cardView.addSubview(titleLabel)
-        cardView.addSubview(nameLabel)
+        cardView.addSubview(subtitleLabel)
 
         initializeConstraints()
     }
@@ -66,7 +66,7 @@ class DetailsCell: UITableViewCell {
             make.leading.equalToSuperview().inset(16.0)
         }
 
-        nameLabel.snp.makeConstraints { make in
+        subtitleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16.0)
             make.top.equalTo(titleLabel.snp.bottom).offset(5.0)
             make.bottom.equalToSuperview().inset(16.0)
